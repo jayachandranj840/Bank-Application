@@ -1,0 +1,40 @@
+CREATE DATABASE IF NOT EXISTS bankapp;
+USE bankapp;
+
+-- Create Admins table
+CREATE TABLE IF NOT EXISTS admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+-- Insert a sample admin user
+-- Replace 'hashed_password_here' with the hashed password generated using the PasswordUtility class
+INSERT INTO admins (username, password) VALUES ('admin', '12345');
+
+-- Create Customers table
+CREATE TABLE customers (
+    accountNo VARCHAR(14) PRIMARY KEY,
+    fullName VARCHAR(100),
+    address VARCHAR(255),
+    mobileNo VARCHAR(15),
+    email VARCHAR(100),
+    accountType VARCHAR(10),
+    balance DECIMAL(10, 2),
+    dob DATE,
+    idProof VARCHAR(12),
+    password VARCHAR(255)
+);
+
+-- Create Transactions table
+CREATE TABLE IF NOT EXISTS transactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    accountNo VARCHAR(14),
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    type ENUM('Deposit', 'Withdraw') NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    FOREIGN KEY (accountNo) REFERENCES customers(accountNo)
+);
+
+SELECT * FROM customers;
+ 
